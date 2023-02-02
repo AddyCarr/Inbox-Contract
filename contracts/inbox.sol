@@ -1,5 +1,6 @@
 pragma solidity ^0.4.17;
 
+//contract definition
 contract Inbox {
     string public message;
 
@@ -10,4 +11,5 @@ contract Inbox {
     function setMessage(string newMesssage) public {
         message = newMesssage;
     }
+
 }
