@@ -1,32 +1,23 @@
 const assert = require("assert");
-const ganache = require("ganache-cli");
+const ganache = require("ganache");
 const Web3 = require("web3");
 const web3 = new Web3(ganache.provider());
 
 beforeEach(() => {
-    // get a list of all accounts
-    web3.eth.getAccounts()
-    .then(fetchedAcc/counts => [
-        console.lo(fetchedAcccounts);
-    ])
-}
+  // get a list of all accounts
+  web3.eth.getAccounts().then((fetchedAccounts) => {
+    console.log(fetchedAccounts);
+  });
+});
 
-descirbe ('Inbox', () => {
-    it('deploys a contract', ( ) => {});
-})
-
-
-
-
-
-
-
-
+describe("Inbox", () => {
+  it("deploys a contract", () => {});
+});
 
 // just about, everamacyion we
 // CAR EXAMPLE MOCHA TEST
 // ? What is a class and it's properties
-// class Car { 
+// class Car {
 //   park() {
 //     return "stopped";
 //   }
