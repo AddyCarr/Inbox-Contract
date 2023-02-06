@@ -2,9 +2,11 @@ const assert = require("assert");
 const ganache = require("ganache");
 const Web3 = require("web3");
 const web3 = new Web3(ganache.provider());
+const { interface, bytecode } = require("../compile");
 
 let accounts;
 let inbox;
+
 //to get access to a variable stored within function scope of before each, declare beforehand
 
 beforeEach(async () => {
@@ -13,7 +15,7 @@ beforeEach(async () => {
   // async is marked after function. await keyword replaced .then
   inbox = await new web3.eth.Contract(JSON.parse(interface))
     .deploy({
-      data: Bytecode,
+      data: bytecode,
       arguments: ["Hi there!"],
     })
     .send({ from: accounts[0], gas: "1000000" });
@@ -21,6 +23,19 @@ beforeEach(async () => {
 
 describe("Inbox", () => {
   it("deploys a contract", () => {
-    console.log(inbox);
+    assert.ok(inbox.options.address);
+  });
+
+  it("has a default message", async () => {
+    const message = await inbox.methods.message().call();
+    assert.equal(message, "Hi there!");
+  });
+
+  it("stores a message", async () => {
+    await inbox.methods.setMessage("bye").send({ from: accounts[0] });
+    //Here we are trying to modify a contract data, so we have to pay gas, specify a sender.
+    // no need to assign a functio tx as it only returns a hash
+    const message = await inbox.methods.message().call();
+    assert.equal(message, "bye");
   });
 });
